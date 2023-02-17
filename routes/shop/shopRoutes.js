@@ -5,32 +5,18 @@ const User = require( "../../models/User" )
 
 const router = express.Router()
 
+const { axiosInstance } = require( '../../utils/axios' )
+
 router.post( "/find/geolocation", async ( req, res ) => {
     const { latitude, longitude } = req.body
-    const shops = await fetch(
-        `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=coffee`,
-        {
-            headers: {
-                Authorization: `Bearer ${process.env.API_KEY}`,
-                "Content-Type": "application-json",
-            },
-        }
-    )
-    res.send( await shops.json() )
+    const shops = await axiosInstance.get( `/search?latitude=${latitude}&longitude=${longitude}&term=coffee` )
+    res.send( shops.data )
 } )
 
 router.post( "/find/city", async ( req, res ) => {
     const { city } = req.body
-    const shops = await fetch(
-        `https://api.yelp.com/v3/businesses/search?location=${city}&term=coffee`,
-        {
-            headers: {
-                Authorization: `Bearer ${process.env.API_KEY}`,
-                "Content-Type": "application-json",
-            },
-        }
-    )
-    res.send( await shops.json() )
+    const shops = await axiosInstance.get( `https://api.yelp.com/v3/businesses/search?location=${city}&term=coffee` )
+    res.send( shops.data )
 } )
 
 router.post( "/bookmark", async ( req, res ) => {
