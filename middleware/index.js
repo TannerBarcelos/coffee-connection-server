@@ -2,7 +2,7 @@ const express = require( "express" )
 const initializeSession = require( "../lib/auth/session" )
 const setUpSessionMiddleware = require( "./sessionMiddleware" )
 const cors = require( "cors" )
-const { corsOpts, allowedOrigins } = require( '../lib/origins' )
+const { corsOpts } = require( '../lib/origins' )
 
 
 
